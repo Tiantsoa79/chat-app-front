@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../../components/Navbar';// Importer le composant VerticalNavbar
@@ -42,14 +43,6 @@ const ProfilePage = () => {
       fetchUserData();
     }, []);
   
-    const handleLogout = () => {
-      // Supprimer le cookie "token"
-      Cookies.remove('token');
-  
-      // Rediriger vers la page de connexion
-      router.push('/users/login');
-    };
-  
     const handleEditProfile = () => {
       // Rediriger vers la page de modification de profil
       router.push('/users/edit');
@@ -60,17 +53,33 @@ const ProfilePage = () => {
     }
   
     return (
-      <div>
-        <Navbar /> {/* Inclure le composant VerticalNavbar ici */}
+      <div className="container-fluid d-flex">
+      <div className="col-md-3 bg-light p-3">
+        <Navbar />
+      </div>
+      <div className="col-md-9 bg-white p-3">
         <h1>Profile</h1>
         <p>Name: {user.name}</p>
         <p>Email: {user.email}</p>
         <p>Bio: {user.bio || 'N/A'}</p>
-        <button onClick={handleLogout}>Déconnexion</button> {/* Bouton de déconnexion */}
-        <button onClick={handleEditProfile}>Edit Profile</button> {/* Bouton d'édition de profil */}
+        <button className="btn btn-primary" onClick={handleEditProfile}>
+          Edit Profile
+        </button>
       </div>
+    </div>
+      // <div>
+      //   <Navbar /> {/* Inclure le composant VerticalNavbar ici */}
+      //   <h1>Profile</h1>
+      //   <p>Name: {user.name}</p>
+      //   <p>Email: {user.email}</p>
+      //   <p>Bio: {user.bio || 'N/A'}</p>
+      //   <button onClick={handleEditProfile}>Edit Profile</button> {/* Bouton d'édition de profil */}
+      // </div>
     );
   };
-  
 
 export default ProfilePage;
+
+
+
+

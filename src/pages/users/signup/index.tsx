@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie'; // Importer le package js-cookie
+import Navbar from '@/components/Navbar';
 
 const SignUpPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -14,6 +15,10 @@ const SignUpPage = () => {
       const response = await axios.post('http://localhost:8080/users/', data);
       if (response.status === 201) {
         const token = response.data.user.token;
+
+        //id
+        const idUser = response.data.user.id;
+        Cookies.set('id', idUser);
 
         // Stocker le jeton dans un cookie
         Cookies.set('token', token);

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import Navbar from '@/components/Navbar';
 
 const EditProfilePage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -31,6 +32,7 @@ const EditProfilePage = () => {
 
   return (
     <div>
+      <Navbar /> {/* Inclure le composant VerticalNavbar ici */}
       <h1>Edit Profile</h1>
       {editError && <p>Error occurred while editing profile</p>}
       <form onSubmit={handleSubmit(onSubmit)}>
