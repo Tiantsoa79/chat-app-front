@@ -47,7 +47,16 @@ const Navbar = () => {
         
   };
     
-
+  const handleCreateChannel = () => {
+    const token = Cookies.get('token');
+    
+    if (token) {
+      router.push('/channels/create');
+    } else {
+      router.push('/users/login');
+    }
+        
+  };
   return (
     <div className="vertical-navbar bg-light p-3 d-flex flex-column justify-content-start align-items-start">
     <button onClick={handleLoginClick} className="btn btn-primary mb-3">Login</button>
@@ -55,7 +64,8 @@ const Navbar = () => {
     <button onClick={handleToggleChannels} className="btn btn-primary mb-3">
       {showChannels ? 'Hide Channels' : 'Show Channels'}
     </button>
-    {showChannels && <ChannelsPage />}
+    {showChannels && <ChannelsPage /> }
+    {<button onClick={handleCreateChannel}>create channel</button>}
     <button onClick={handleLogout} className="btn btn-primary">Déconnexion</button> {/* Bouton de déconnexion */}
   </div>
     // <div className="vertical-navbar">
