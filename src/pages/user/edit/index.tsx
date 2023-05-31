@@ -4,13 +4,17 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import Navbar from '@/components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const EditProfilePage = () => {
+const editProfileForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
   const [editError, setEditError] = useState(false);
 
   const onSubmit = async (data: any) => {
+    if (data.name === '') {
+      delete data.name;
+    }
     try {
       const token = Cookies.get('token');
       const response = await axios.put('http://localhost:8080/user', data, {
@@ -20,7 +24,7 @@ const EditProfilePage = () => {
       });
 
       if (response.status === 200) {
-        router.push('/users/profile');
+        router.push('/profile');
       } else {
         setEditError(true);
       }
@@ -31,8 +35,11 @@ const EditProfilePage = () => {
   };
 
   return (
-    <div>
-      <Navbar /> {/* Inclure le composant VerticalNavbar ici */}
+    <div className="container-fluid d-flex flex-row">
+    <div className="col-md-3 bg-light p-3">
+      <Navbar />
+    </div>
+    <div className="col-md-9 bg-white p-3">
       <h1>Edit Profile</h1>
       {editError && <p>Error occurred while editing profile</p>}
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,10 +62,11 @@ const EditProfilePage = () => {
           <label>Bio</label>
           <textarea {...register('bio')} />
         </div>
-        <button type="submit">Save Changes</button>
+        <button type="submit" className='btn btn-primary roounded-pill'>Save Changes</button>
       </form>
+      </div>
     </div>
   );
 };
 
-export default EditProfilePage;
+export default editProfileForm;

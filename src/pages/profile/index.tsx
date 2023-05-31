@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../../../components/Navbar';// Importer le composant VerticalNavbar
+import Navbar from '../../components/Navbar';// Importer le composant VerticalNavbar
 import Cookies from 'js-cookie'; // Importer le package js-cookie
 import { useRouter } from 'next/router';
 
@@ -15,7 +15,8 @@ interface User {
 const ProfilePage = () => {
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
-  
+    const [createError, setCreateError] = useState(false);
+    
     useEffect(() => {
       const fetchUserData = async () => {
         try {
@@ -32,11 +33,11 @@ const ProfilePage = () => {
           if (response.status === 200 && response.data.status) {
             setUser(response.data.user);
           } else {
-            // Handle error or redirect to login/signup page
+           setCreateError(true); 
           }
         } catch (error) {
           console.error(error);
-          // Handle error or redirect to login/signup page
+          
         }
       };
   
@@ -45,7 +46,7 @@ const ProfilePage = () => {
   
     const handleEditProfile = () => {
       // Rediriger vers la page de modification de profil
-      router.push('/users/edit');
+      router.push('/user/edit');
     };
   
     if (!user) {
@@ -53,7 +54,7 @@ const ProfilePage = () => {
     }
   
     return (
-      <div className="container-fluid d-flex">
+      <div className="container-fluid d-flex flex-row">
       <div className="col-md-3 bg-light p-3">
         <Navbar />
       </div>

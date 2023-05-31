@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface Channel {
   id: number;
@@ -12,7 +13,7 @@ interface Channel {
   createdAt: string;
 }
 
-const ChannelsPage = () => {
+const Channels = () => {
   const [channels, setChannels] = useState<Channel[]>([]);
   const router = useRouter();
 
@@ -42,7 +43,7 @@ const ChannelsPage = () => {
   }, []);
 
   const handleChannelClick = (channelId: number) => {
-    router.push(`/channels/channel/${channelId}`);
+    router.push(`/channel/${channelId}`);
   };
 
 
@@ -52,12 +53,12 @@ const ChannelsPage = () => {
 
   return (
     <div>
-      <h1>Channels</h1>
       {filteredChannels.map((channel) => (
-        <div key={channel.id} onClick={() => handleChannelClick(channel.id)}>
-          <p>{channel.name}</p>
-          <p>{channel.type}</p>
-          <p>{channel.ownerId}</p>
+        <div className="list-group" key={channel.id} onClick={() => handleChannelClick(channel.id)}>
+          <p className="list-group-item h6">{channel.name}
+          <br />
+          <small> ({channel.type})</small>
+          </p>
           {/* Afficher d'autres détails du canal si nécessaire */}
         </div>
       ))}
@@ -65,4 +66,4 @@ const ChannelsPage = () => {
   );
 };
 
-export default ChannelsPage;
+export default Channels;
